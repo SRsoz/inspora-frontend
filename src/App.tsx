@@ -1,10 +1,19 @@
 import './App.css'
-function App() {
+import Navbar from './components/Navbar';
+import { useState } from 'react';
 
+function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <main> 
-    </main>
+    <div>
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        onSignIn={() => setIsLoggedIn(true)}
+        onSignUp={() => setIsLoggedIn(true)}
+        onSignOut={() => setIsLoggedIn(false)}
+      />
+    </div>
   );
 }
 
