@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
+
 type SearchBarProps = {
   placeholder?: string;
   onChange?: (value: string) => void;
 };
+
 
 const SearchBar: React.FC<SearchBarProps> = ({
   placeholder = "Search for pictures...",
   onChange,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+
 
   return (
     <form
@@ -44,5 +47,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </form>
   );
 };
+
 
 export default SearchBar;
