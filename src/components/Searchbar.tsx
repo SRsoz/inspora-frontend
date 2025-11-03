@@ -1,52 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 
-
-type SearchBarProps = {
+type Props = {
+  value?: string;
+  onChange: (value: string) => void;
+  onSubmit?: () => void;
   placeholder?: string;
-  onChange?: (value: string) => void;
 };
 
-
-const SearchBar: React.FC<SearchBarProps> = ({
-  placeholder = "Search for pictures...",
+const SearchBar: React.FC<Props> = ({
+  value = "",
   onChange,
+  onSubmit,
+  placeholder = "Search...",
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
-
-
   return (
     <form
-      className={`
-        flex items-center
-        bg-[#EAE8E8]
-        rounded-[1.25rem]
-        w-full max-w-[42rem]
-        h-[3rem]
-        px-[1rem]
-        cursor-pointer
-      `}
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit?.();
+      }}
     >
-      <img
-        src="/search.svg"
-        alt="Search icon"
-        className="w-5 h-5 mr-3 opacity-70"
-      />
       <input
         type="text"
-        placeholder={isFocused ? "" : placeholder}
-        onChange={(e) => onChange?.(e.target.value)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className="
-          outline-none  
-          cursor-pointer
-          placeholder-[#7D7A7A]
-        "
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            onSubmit?.();
+          }
+        }}
+        placeholder={placeholder}
+        className="w-64 px-3 py-2 border rounded"
+        aria-label="Search"
       />
     </form>
   );
 };
-
 
 export default SearchBar;

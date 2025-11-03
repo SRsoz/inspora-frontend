@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 type NavbarProps = {
@@ -15,6 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onSignOut,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -36,32 +38,36 @@ const Navbar: React.FC<NavbarProps> = ({
     };
   }, []);
 
-   const navClasses = `
-    fixed top-0 left-0 w-full
-    h-[5rem]
-    flex items-center justify-between
-    px-[2rem]
+  const handleSignIn = () => navigate("/login");
+  const handleSignUp = () => navigate("/register");
+
+  return (
+  
+   <nav className={`
+    fixed w-full
+    h-20
+    flex items-center justify-center
+    
     transition-all duration-300 ease-in-out
     z-50
     ${scrolled ? "bg-white/80 backdrop-blur-sm" : "bg-white"}
-  `;
+  `}>
+      <div className="flex items-center justify-between max-w-4xl w-full">
+        <img src="/logo.svg" alt="Logo"/>
 
-  return (
-   <nav className={navClasses}>
-      <img src="/logo.svg" alt="Logo"/>
-
-      <div className="flex items-center gap-[1rem]">
+        <div className="flex items-center gap-4">
         {!isLoggedIn ? (
           <>
-            <Button variant="primary" text="Sign In" onClick={onSignIn} />
-            <Button variant="secondary" text="Sign Up" onClick={onSignUp} />
+            <Button variant="primary" text="Sign In" onClick={onSignIn || handleSignIn} />
+            <Button variant="secondary" text="Sign Up" onClick={onSignUp || handleSignUp} />
           </>
         ) : (
           <>
-            <img src="/account.svg" alt="Account" className="h-[2.5rem] w-[2.5rem] cursor-pointer" />
+            <img src="/account.svg" alt="Account" className="h-10 w-10 cursor-pointer" />
             <Button variant="third" text="Sign Out" onClick={onSignOut} />
           </>
         )}
+      </div>
       </div>
     </nav>
   );
