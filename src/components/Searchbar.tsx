@@ -1,37 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
-  value?: string;
-  onChange: (value: string) => void;
-  onSubmit?: () => void;
+  onSubmit: (searchTerm: string) => void;
   placeholder?: string;
 };
 
 const SearchBar: React.FC<Props> = ({
-  value = "",
-  onChange,
   onSubmit,
-  placeholder = "Search...",
+  placeholder = "Search for pictures...",
 }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(inputValue);
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit?.();
-      }}
-    >
+    <form onSubmit={handleSubmit} className="flex items-center bg-[#EAE8E8] rounded-[1.25rem] w-full max-w-80 h-12 px-4 cursor-pointer">
+      <img src="/search.svg" alt="Search icon" className="w-5 h-5 mr-3 opacity-70" />
       <input
         type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            onSubmit?.();
-          }
-        }}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         placeholder={placeholder}
-        className="w-64 px-3 py-2 border rounded"
+        className="outline-none cursor-pointer placeholder-[#7D7A7A]"
         aria-label="Search"
       />
     </form>
