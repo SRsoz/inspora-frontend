@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+
 const API_URL = import.meta.env.VITE_API_URL! || "http://localhost:4001";
 interface FeedItem {
   id: string;
@@ -19,7 +20,6 @@ const Homepage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const fetchFeed = async (term: string) => {
-    console.log(API_URL)
     setLoading(true);
 
     try {
@@ -28,7 +28,7 @@ const Homepage: React.FC = () => {
         ...(term ? { title: term } : {})
       }).toString();
       
-      const res = await fetch(`${API_URL}/api/feed${query ? `?${query}` : ''}`);
+      const res = await fetch(`${API_URL}/api/feed${query ? `/?${query}` : ''}`);
       const data = await res.json();
       
       setFeed(data.feed || []);
