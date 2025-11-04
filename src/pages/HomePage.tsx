@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
 const API_URL = import.meta.env.VITE_API_URL! || "http://localhost:4001";
-
 interface FeedItem {
   id: string;
   title: string;
@@ -20,16 +19,18 @@ const Homepage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const fetchFeed = async (term: string) => {
+    console.log(API_URL)
     setLoading(true);
+
     try {
       const query = new URLSearchParams({
         page: String(page),
         ...(term ? { title: term } : {})
       }).toString();
-
+      
       const res = await fetch(`${API_URL}/api/feed${query ? `?${query}` : ''}`);
       const data = await res.json();
-
+      
       setFeed(data.feed || []);
       setTotalPages(data.totalPages || 1);
     } catch (err) {
@@ -40,21 +41,21 @@ const Homepage: React.FC = () => {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchFeed(searchTerm);
   }, [page]);
-
+  
   const handleSearch = (term: string) => {
     setSearchTerm(term);
     setPage(1);
     fetchFeed(term);
   };
-
+  
   if (loading) {
     return <p className="text-center mt-10 text-gray-700">Loading...</p>;
   }
-
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
