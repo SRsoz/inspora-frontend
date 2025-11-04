@@ -28,7 +28,7 @@ const Homepage: React.FC = () => {
         ...(term ? { title: term } : {})
       }).toString();
       
-      const res = await fetch(`${API_URL}/api/feed${query ? `/?${query}` : ''}`);
+      const res = await fetch(`${API_URL}/api/feed${query ? `?${query}` : ''}`);
       const data = await res.json();
       
       setFeed(data.feed || []);
