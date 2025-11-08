@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
 
@@ -58,8 +57,6 @@ const Homepage: React.FC = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       <main className="flex flex-col flex-1 w-full px-4 pt-34 max-w-360 mx-auto">
         <div className="flex justify-between flex-col md:flex-row items-center mb-12 gap-4">
           <h1 className="text-5xl font-bold text-gray-900">

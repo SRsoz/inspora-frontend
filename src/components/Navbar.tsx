@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import { useAuth } from "../context/AuthContext";
 
-type NavbarProps = {
-  isLoggedIn?: boolean;
-  onSignIn?: () => void;
-  onSignUp?: () => void;
-  onSignOut?: () => void;
-};
-
-const Navbar: React.FC<NavbarProps> = ({
-  isLoggedIn = false,
-  onSignIn,
-  onSignUp,
-  onSignOut,
-}) => {
+const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
     const handleScroll = () => {
       if (timeoutId) return;
-
       timeoutId = setTimeout(() => {
         setScrolled(window.scrollY > 0);
         timeoutId = null;
       }, 100);
     };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -38,8 +25,8 @@ const Navbar: React.FC<NavbarProps> = ({
     };
   }, []);
 
-  const handleSignIn = () => navigate("/login");
-  const handleSignUp = () => navigate("/register");
+  const handleSignIn = () => navigate("/auth?mode=login");
+  const handleSignUp = () => navigate("/auth?mode=register");
 
   return (
   
@@ -58,13 +45,13 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center gap-4">
         {!isLoggedIn ? (
           <>
-            <Button variant="primary" text="Sign In" onClick={onSignIn || handleSignIn} />
-            <Button variant="secondary" text="Sign Up" onClick={onSignUp || handleSignUp} />
+            <Button variant="primary" text="Sign In" onClick={handleSignIn} />
+            <Button variant="secondary" text="Sign Up" onClick={handleSignUp} />
           </>
         ) : (
           <>
             <img src="/account.svg" alt="Account" className="h-10 w-10 cursor-pointer" />
-            <Button variant="third" text="Sign Out" onClick={onSignOut} />
+            <Button variant="third" text="Sign Out" onClick={logout} />
           </>
         )}
       </div>
