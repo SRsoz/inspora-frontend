@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -50,6 +50,9 @@ const Navbar: React.FC = () => {
           </>
         ) : (
           <>
+          {user?.role === 'admin' && (
+                <Button variant="primary" text="Admin" onClick={() => navigate("/admin")} />
+              )}
             <img src="/account.svg" alt="Account" className="h-10 w-10 cursor-pointer" />
             <Button variant="third" text="Sign Out" onClick={logout} />
           </>

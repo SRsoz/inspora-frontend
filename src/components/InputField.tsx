@@ -4,6 +4,7 @@ interface InputFieldProps {
   type?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }
 
 export default function InputField({
@@ -12,6 +13,7 @@ export default function InputField({
   type = "text",
   value,
   onChange,
+  required = true,
 }: InputFieldProps) {
   return (
     <div>
@@ -23,7 +25,7 @@ export default function InputField({
         onChange={onChange}
         placeholder={`Enter your ${label.toLowerCase()}`}
         className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
-        required
+        required={required}
       />
     </div>
   );
