@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import api from "../context/api";
 
-const API_URL = import.meta.env.VITE_API_URL! || "http://localhost:4001";
 interface FeedItem {
   id: string;
   title: string;
@@ -18,20 +18,18 @@ const Homepage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+
   const fetchFeed = async (term: string) => {
     setLoading(true);
-
     try {
       const query = new URLSearchParams({
         page: String(page),
         ...(term ? { title: term } : {})
       }).toString();
       
-      const res = await fetch(`${API_URL}/api/feed${query ? `?${query}` : ''}`);
-      const data = await res.json();
-      
-      setFeed(data.feed || []);
-      setTotalPages(data.totalPages || 1);
+      const res = await api.get(`/feed${query ? `?${query}` : ''}`);
+      setFeed(res.data.feed || []);
+      setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       console.error("Error fetching feed:", err);
       setFeed([]);

@@ -1,20 +1,30 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Homepage from "./pages/HomePage";
-import AuthPage from "./pages/AuthPage";
-import Navbar from "./components/Navbar";
-import { AuthProvider } from "./context/AuthContext";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import AuthPage from './pages/AuthPage';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminRoute from './components/AdminRoute';
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
+      <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute requireAdmin>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </AuthProvider>
   );
 };
