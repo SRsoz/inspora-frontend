@@ -7,5 +7,8 @@ export default function AuthPage() {
 
   const mode = modeParam === "register" ? "register" : "login";
 
-  return <AuthForm mode={mode} />;
+  return ( <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+      <AuthForm mode={mode} />
+    </div>
+  );
 }
