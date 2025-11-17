@@ -98,7 +98,7 @@ export default function AuthForm({ mode, selectedUser, onClose }: AuthFormProps)
             />
           )}
           <InputField
-            label={mode === 'admin-edit' ? 'Password (Leave blank to keep unchanged)' : 'Password'}
+            label={mode === 'admin-edit' ? 'Password' : 'Password'}
             name="password"
             type="password"
             value={formData.password}

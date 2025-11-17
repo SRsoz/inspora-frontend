@@ -54,19 +54,19 @@ const Homepage: React.FC = () => {
   }
   
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="justify-center min-h-screen flex flex-col">
       <main className="flex flex-col flex-1 w-full px-4 pt-34 max-w-360 mx-auto">
-        <div className="flex justify-between flex-col md:flex-row items-center mb-12 gap-4">
+        <div className="flex justify-between flex-col lg:flex-row items-center mb-12 gap-4">
           <h1 className="text-5xl font-bold text-gray-900">
             See what's new on Inspora
           </h1>
           <SearchBar onSubmit={handleSearch} />
         </div>
 
-        <div className="flex flex-col items-center flex-wrap m-1 font-poppins h-1300">
+        <div className="font-poppins columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 mb-8">
           {feed.length > 0 ? (
             feed.map((post) => (
-              <article key={post.id} className="m-1">
+              <article key={post.id} className="break-inside-avoid mb-4">
                 <img src={post.imageUrl} alt={post.title || "Feed image"} />
                 <div className="p-1">
                   <p className="text-sm font-semibold text-gray-600 w-64">

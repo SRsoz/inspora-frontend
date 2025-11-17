@@ -7,7 +7,7 @@ interface DeleteUserModalProps {
 
 const DeleteUserModal: React.FC<DeleteUserModalProps> = ({ onConfirm, onCancel }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-stone-500/30 bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded shadow">
         <h2 className="text-xl font-semibold mb-4">Confirm Delete</h2>
         <p className="mb-4">Are you sure you want to delete this user?</p>
