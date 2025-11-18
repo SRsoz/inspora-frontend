@@ -7,7 +7,13 @@ import { getAllUsers } from '../context/api';
 
 const AdminDashboard: React.FC = () => {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState<{ id: string; username: string; email: string; role: string } | null>(null);
+  
+  const [selectedUser, setSelectedUser] = useState<{
+     _id: string; 
+     username: string; 
+     email: string; 
+     role: string 
+    } | null>(null);
 
   const fetchUsers = async () => {
     try {
@@ -25,7 +31,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <AdminRoute requireAdmin>
         <Navbar />
-        <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 gap-8">
+        <main className="flex-1 flex flex-col items-center p-4 sm:p-6 lg:p-8 gap-8">
           <UserForm selectedUser={selectedUser} onClose={() => { setSelectedUser(null); fetchUsers(); }} />
           <UserList users={users} onEdit={setSelectedUser} fetchUsers={fetchUsers} />
         </main>

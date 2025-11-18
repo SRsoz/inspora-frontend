@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from './InputField';
 import { useAuth } from '../context/AuthContext';
@@ -7,7 +7,7 @@ import api from '../context/api';
 
 interface AuthFormProps {
   mode: 'login' | 'register' | 'admin-create' | 'admin-edit';
-  selectedUser?: { id: string; username: string; email: string; role: string } | null;
+  selectedUser?: { _id: string; username: string; email: string; role: string } | null;
   onClose?: () => void;
 }
 
@@ -26,14 +26,33 @@ interface RegisterData {
 export default function AuthForm({ mode, selectedUser, onClose }: AuthFormProps) {
   const navigate = useNavigate();
   const { login } = useAuth();
+
   const [formData, setFormData] = useState<LoginData | RegisterData>({
-    username: selectedUser?.username || '',
-    email: selectedUser?.email || '',
+    username: '',
+    email:'',
     password: '',
-    role: selectedUser?.role || 'user',
+    role: 'user',
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (selectedUser) {
+      setFormData({
+        username: selectedUser.username || '',
+        email: selectedUser.email || '',
+        password: '',
+        role: selectedUser.role || 'user',
+      });
+    } else {
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        role: 'user',
+      });
+    }
+  }, [selectedUser]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,7 +68,7 @@ export default function AuthForm({ mode, selectedUser, onClose }: AuthFormProps)
       const data = mode === 'login' ? { username: formData.username, password: formData.password } : formData;
 
       const response = await (mode === 'login' ? api.post(endpoint, data) :
-                              mode === 'admin-edit' ? updateUser(selectedUser!.id, data as RegisterData) :
+                              mode === 'admin-edit' ? updateUser(selectedUser!._id, data as RegisterData) :
                               createUser(data as RegisterData));
 
       if (mode === 'login' && response.data.token) {

@@ -2,7 +2,7 @@ import React from 'react';
 import AuthForm from './AuthForm';
 
 interface UserFormProps {
-  selectedUser: { id: string; username: string; email: string; role: string } | null;
+  selectedUser: { _id: string; username: string; email: string; role: string } | null;
   onClose: () => void;
 }
 

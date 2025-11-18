@@ -11,7 +11,7 @@ interface User {
 
 interface UserListProps {
   users: User[];
-  onEdit: (user: { id: string; username: string; email: string; role: string }) => void;
+  onEdit: (user: { _id: string; username: string; email: string; role: string }) => void;
   fetchUsers: () => void;
 }
 
@@ -73,7 +73,7 @@ const UserList: React.FC<UserListProps> = ({ users, onEdit, fetchUsers }) => {
                   className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition font-medium text-sm"
                   onClick={() =>
                     onEdit({
-                      id: user._id,
+                      _id: user._id,
                       username: user.username,
                       email: user.email,
                       role: user.role,
